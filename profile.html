@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+    <script src='https://code.jquery.com/jquery-3.3.1.min.js'></script>
+</head>
+<body>
+<header>
+       <H1>Chat web edition</H1>
+   </header>
+   <div id='profile'>
+       <div id='login'>
+           Логин:
+           <span id='lgn'></span>
+           <br>
+           Сменить логин:
+           <input type="text" id='clog'>
+           <button id='chlog'>Сменить</button>
+       </div>
+       <div id='password'>
+           Пароль:
+            <span id='pss'></span>
+            <br>
+            Сменить пароль:
+            <input type="text" id='cpas'>
+           <button id='chpas'>Сменить</button>
+        </div>
+        <div>
+            Аватар:
+            <span id='ava'>
+            </span>
+            <br>
+            Выбрать аватар:
+            <input type="file" id='sava'>
+            <button id='seava'>выбрать</button>
+        </div>
+   </div>
+   <footer>
+       <a href="">справка</a>
+   </footer>
+   <script>
+       $.post('profile.php',{askdata : 1},function (data){
+           $('#lgn').html(data);
+       });
+       $.post('profile.php',{askdata : 2},function (data){
+           $('#pss').html(data);
+       });
+       $.post('profile.php',{askdata : 3},function (data){
+           $('#ava').html(data);
+       });
+       $('#seava').click(function(){
+        var form = new FormData();
+        form.append('file', document.getElementById('sava').files[0]);
+        form.append('askdata',4);
+        $.ajax({
+        type:"POST",
+        url: 'profile.php',
+        processData: false,
+        contentType: false,
+        data:form,
+        success: function (data) {
+            $('#ava').html(data);
+        },
+        error:function(){
+            console.log(1);
+        }
+    });
+    //     $.post('profile.php',form,function (data){
+    //         $('#ava').html(data);
+    //    });
+       });
+   </script> 
+</body>
+</html>

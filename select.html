@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Chat web edition</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+    <script src='https://code.jquery.com/jquery-3.3.1.min.js'> </script>
+</head>
+<body>
+   <header>
+       <H1>Chat web edition</H1>
+   </header>
+   <div class='loged'><a href='profile.html'>Профиль</a><br><button id='exit'>Выйти</button></div> 
+   <div id='select'>
+    <input id='fnd' type="text" name="search" size="150"  maxlength="25">
+    <button id='srch' >Найти</button>
+   <div id='searched'></div>
+   </div>
+   <footer>
+       <a href="">справка</a>
+   </footer>
+   <script>
+        $('#exit').click(function(){
+        $.post('exit.php',{},function (data){
+            document.location.href = "index.php";
+       }); 
+    });
+       $('#srch').click(function(){
+        $.post('select.php',{op : 0, find : $('#fnd').val()},function (data){
+        $('#searched').html(data);
+        $('.usrs').click(function(){
+            $.post('select.php',{op : 1,selected : this.id},function (data){
+                document.location.href = "cht.html";
+            });
+        });
+       });
+       });
+   </script>
+</body>
+</html>
